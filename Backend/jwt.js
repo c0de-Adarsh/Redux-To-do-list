@@ -7,7 +7,7 @@ const User = require('./Models/User')
 
 const generateToken = (userData) => {
   try {
-    // Ensure userData is a plain object with only necessary fields
+    
     const payload = {
       userId: userData._id,  // Assuming _id is the unique user identifier
       email: userData.email,  // If you want to include email in the token
