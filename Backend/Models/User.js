@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const { validate } = require('./toDO')
+const validator = require('validator')
 
-const userSchma = mongoose.Schema({
+const userSchma = new mongoose.Schema({
     name:{
         type:String,
         required:[true,'Plese Enter Your Name'],
@@ -12,7 +12,7 @@ const userSchma = mongoose.Schema({
         type:String,
         unique:true,
         required:true,
-        validate:[validate.isEmail,'Please Enter valid email address']
+        validate:[validator.isEmail,'Please Enter valid email address']
     },
     password:{
         type:String,
