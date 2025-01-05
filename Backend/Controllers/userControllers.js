@@ -26,7 +26,7 @@ const signUpUser = async(req,res) =>{
         //saved the user in database
         await newUser.save()
 
-        res.status(200).json({
+       return res.status(200).json({
             message:'User Register Successfully',
             success:true,
             newUser,
@@ -61,7 +61,7 @@ const loginUser = async(req,res) =>{
         const user = await User.findOne({email})
 
         if(!user){
-            res.status(404).json({
+          return  res.status(404).json({
                 message:'User Not Found',
                 success:false,
             })
@@ -70,7 +70,7 @@ const loginUser = async(req,res) =>{
         const isMatch = await bcrypt.compare(password,user.password)
 
         if(!isMatch){
-            res.status(401).json({
+            return res.status(401).json({
                 message:'Incorrect Password',
                 success:false
             })
@@ -79,7 +79,7 @@ const loginUser = async(req,res) =>{
             const token = generateToken(user._id, user.email)
        
 
-        res.status(200).json({
+       return res.status(200).json({
             message:'User Logged in successfully',
             success:true,
             token

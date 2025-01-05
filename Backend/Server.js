@@ -4,15 +4,24 @@ const app = express();
 require('dotenv').config()
 const db = require('./db')
 const route = require('./Routes/Route')
+const cors = require('cors')
+
 
 
 const PORT = process.env.PORT || 5000
 
 app.use(bodyParser.json())
 
-app.use(route)
 
-app.use(bodyParser.json())
+
+
+app.use(cors({
+    origin:'http://localhost:5173',
+    
+    credentials:true
+}))
+
+app.use(route)
 
 app.get('/',(req,res)=>{
     res.send('Hello world')
