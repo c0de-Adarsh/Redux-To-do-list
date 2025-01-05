@@ -7,6 +7,7 @@ import Signup from './Pages/Signup'
 import About from './Pages/About'
 
 import Todos from './Pages/Todos'
+import Footer from './Components/Footer'
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
       <Route path='/about' element={<About/>}/>
       <Route path='/todos' element={<Todos/>}/>
     </Routes>
+    <Footer/>
     </BrowserRouter>
     </>
   )

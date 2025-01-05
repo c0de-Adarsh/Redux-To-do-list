@@ -17,9 +17,9 @@ const NavBar = () => {
                 <p className='text-center font-bold text-2xl'>ToDo</p>
                 </Link>
                 <div className='md:flex font-semibold hidden gap-9 '>
-                    <Link className=' hover:text-orange-500'>Home</Link>
-                    <Link className=' hover:text-orange-500'>Todo's</Link>
-                    <Link className=' hover:text-orange-500'>About</Link>
+                    <Link to='/' className=' hover:text-orange-500'>Home</Link>
+                    <Link to='/todos' className=' hover:text-orange-500'>Todo's</Link>
+                    <Link to='/about' className=' hover:text-orange-500'>About</Link>
                 </div>
 
                 <div className=' md:flex hidden gap-7'>
