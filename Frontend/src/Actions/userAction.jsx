@@ -44,7 +44,7 @@ import {toast} from 'react-toastify'
    }
  }
  
- export const isLogin = () => async (dispatch) =>{
+ export const IsLogin = () => async (dispatch) =>{
 
    try {
       dispatch(isLoginRequest())

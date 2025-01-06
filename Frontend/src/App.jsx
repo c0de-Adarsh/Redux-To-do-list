@@ -5,11 +5,11 @@ import Home from './Pages/Home'
 import Login from './Pages/Login'
 import Signup from './Pages/Signup'
 import About from './Pages/About'
-import Todos from './Pages/Todos'
+import {Todos} from './Pages/Todos'
 import Footer from './Components/Footer'
 import { ToastContainer } from 'react-toastify'
 import { useDispatch } from 'react-redux'
-import { isLogin } from './Actions/userAction'
+import { IsLogin } from './Actions/userAction'
 
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
   useEffect(()=>{
 
     const logOrNot = () =>{
-      dispatch(isLogin())
+      dispatch(IsLogin())
       
     }
     logOrNot()

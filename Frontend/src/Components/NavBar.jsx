@@ -5,20 +5,20 @@ import {FaBars} from 'react-icons/fa'
 import logo from '../assets/logo2.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { isLogin } from '../Actions/userAction'
+import { IsLogin } from '../Actions/userAction'
 
 
 const NavBar = () => {
 
     const [toggle , setToggle] = useState(null)
-    const {IsLogin} = useSelector(state => state.user)
+    const {isLogin} = useSelector(state => state.user)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const logOut = () =>{
         localStorage.removeItem('accesstoken');
         navigate('/')
-        dispatch(isLogin())
+        dispatch(IsLogin())
         setToggle(!toggle)
         toast.success('LogOut Successfull')
     }
@@ -62,7 +62,7 @@ const NavBar = () => {
                     <Link to='/about' onClick={()=> setToggle(!toggle)}>About</Link>
 
                     {
-                        !IsLogin ? 
+                        !isLogin ? 
                         <>
                         <Link to='/login' className=' hover:text-gray-700' onClick={()=> setToggle(!toggle)} >Login</Link>
                         <Link to='/signup' className=' hover:text-gray-700' onClick={()=> setToggle(!toggle)}>Signup</Link>

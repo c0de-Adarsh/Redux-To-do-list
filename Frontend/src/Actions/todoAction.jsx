@@ -3,45 +3,59 @@ import { createTodoFail, createTodoRequest, createTodoSuccess, deleteTodoFail, d
 import { toast } from "react-toastify"
 
 
-export const getTodos = () => async(dispatch) =>{
-
+export const getTodos = () => async(dispatch) => {
     try {
-        
-        dispatch(getAllTodosRequest())
-
-        const config = {
-            headers:{
-                Authorization: `Bearer ${localStorage.getItem("accesstoken")}`
-            }
-        }
-
-        const {data} = await axios.get('https://todo-slzv.onrender.com/gettodo',config)
-
-        dispatch(getAllTodosSuccess(data.todos))
+      dispatch(getAllTodosRequest());
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+        },
+      };
+      const { data } = await axios.get('https://todo-slzv.onrender.com/gettodo', config);
+      
+      dispatch(getAllTodosSuccess(data.todo)); // Correct property name "todo" from response
     } catch (error) {
-        dispatch(getAllTodosFail(error.response.data.message))
+      dispatch(getAllTodosFail(error.response.data.message));
     }
+  };
+  
 
-}
 
-export const createTodo = (todoData) => async (dispatch)=>{
-    try {
+// export const createTodo = (todoData) => async (dispatch)=>{
+//     try {
         
+//         dispatch(createTodoRequest())
+//         const config = {
+//             headers:{
+//                 Authorization: `Bearer ${localStorage.getItem("accesstoken")}`
+//             }
+//         }
+
+//         const {data} = await axios.post('https://todo-slzv.onrender.com/createtodo',todoData,config)
+//         dispatch(createTodoSuccess())
+//         dispatch(getTodos())
+//         toast.success("Todo added successful")
+//     } catch (error) {
+//         dispatch(createTodoFail(error.response.data.message))
+//     }
+// }
+
+export const createTodo = (todoData) => async (dispatch) => {
+    try {
         dispatch(createTodoRequest())
         const config = {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${localStorage.getItem("accesstoken")}`
             }
         }
-
-        const {data} = await axios.post('https://todo-slzv.onrender.com/createtodo',todoData,config)
-        dispatch(createTodoSuccess())
-        dispatch(getTodos())
+        const {data} = await axios.post('https://todo-slzv.onrender.com/createtodo', todoData, config)
+        dispatch(createTodoSuccess(data.todo)) // Pass the todo data
         toast.success("Todo added successful")
     } catch (error) {
-        dispatch(createTodoFail(error.response.data.message))
+        dispatch(createTodoFail(error.response?.data?.message))
     }
 }
+
 
  export const updateTodo = (id,todoData) => async (dispatch) =>{
 

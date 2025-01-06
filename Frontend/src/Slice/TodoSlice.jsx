@@ -1,70 +1,78 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const todoSlice = createSlice({
     name: 'todo',
-    initialState:{
+    initialState: {
         loading: false,
         allTodos: [],
         error: null,
     },
-    reducers:{
-        getAllTodosRequest:(state)=>{
-            state.loading = false ;
+    reducers: {
+        getAllTodosRequest: (state) => {
+            state.loading = true
         },
-        getAllTodosSuccess:(state, action)=>{
-            state.loading = true ;
+        getAllTodosSuccess: (state, action) => {
+            state.loading = false
             state.allTodos = action.payload
         },
-        getAllTodosFail:(state,action)=>{
-            state.loading = false ;
+        getAllTodosFail: (state, action) => {
+            state.loading = false
             state.error = action.payload
         },
 
-        clearTodos:(state)=>{
-            state.allTodos = []
+        createTodoRequest: (state) => {
+            state.loading = true
         },
-        
-        createTodoRequest:(state)=>{
-            state.loading = false ;
+        createTodoSuccess: (state, action) => {
+            state.loading = false
+            state.allTodos = [...state.allTodos, action.payload]
         },
-        createTodoSuccess : (state)=>{
-            state.loading = false ;
-        },
-        createTodoFail:(state,action)=>{
-            state.loading = false ;
+        createTodoFail: (state, action) => {
+            state.loading = false
             state.error = action.payload
         },
 
-
-        editTodoRequest: (state)=>{
-            state.loading = false
+        editTodoRequest: (state) => {
+            state.loading = true
         },
-        editTodoSuccess: (state)=>{
+        editTodoSuccess: (state, action) => {
             state.loading = false
+            state.allTodos = state.allTodos.map(todo => 
+                todo._id === action.payload._id ? action.payload : todo
+            )
         },
-        editTodoFail: (state, action)=>{
-            state.loading = false ;
+        editTodoFail: (state, action) => {
+            state.loading = false
             state.error = action.payload
         },
 
-        deleteTodoRequest: (state)=>{
-            state.loading = false
+        deleteTodoRequest: (state) => {
+            state.loading = true
         },
-        deleteTodoSuccess: (state)=>{
+        deleteTodoSuccess: (state, action) => {
             state.loading = false
+            state.allTodos = state.allTodos.filter(todo => todo._id !== action.payload)
         },
-        deleteTodoFail: (state, action)=>{
-            state.loading = false ;
+        deleteTodoFail: (state, action) => {
+            state.loading = false
             state.error = action.payload
         },
-
-
     }
 })
 
-export const {getAllTodosRequest, getAllTodosSuccess, getAllTodosFail, createTodoRequest, createTodoSuccess, createTodoFail, clearTodos,
-editTodoRequest, editTodoSuccess, editTodoFail,
-deleteTodoRequest, deleteTodoSuccess, deleteTodoFail
-} = todoSlice.actions ;
+export const {
+    getAllTodosRequest,
+    getAllTodosSuccess,
+    getAllTodosFail,
+    createTodoRequest, 
+    createTodoSuccess,
+    createTodoFail,
+    editTodoRequest,
+    editTodoSuccess,
+    editTodoFail,
+    deleteTodoRequest,
+    deleteTodoSuccess,
+    deleteTodoFail,
+} = todoSlice.actions
 
 export default todoSlice.reducer
