@@ -9,7 +9,7 @@ import {toast} from 'react-toastify'
     try {
         dispatch(loginRequest())
 
-        const {data} = await axios.post('http://localhost:5000/login',userData,)
+        const {data} = await axios.post('https://todo-slzv.onrender.com/login',userData,)
 
         dispatch(loginSuccess());
         localStorage.setItem('accesstoken',data.token)
@@ -26,7 +26,7 @@ import {toast} from 'react-toastify'
    try {
       dispatch(resgisterRequest())
 
-      const {data} = await axios.post('http://localhost:5000/signup')
+      const {data} = await axios.post('https://todo-slzv.onrender.com/signup',userData)
 
       dispatch(resgisterSuccess())
 
@@ -34,7 +34,7 @@ import {toast} from 'react-toastify'
       toast.success('Register Successful!')
    } catch (error) {
       dispatch(resgisterFail(error.response.data.message))
-      if(error.response.data.message.includes('duplicate')){
+      if(error.response?.data?.message?.includes('duplicate')){
          toast.error('User already exist')
 
       }else{
@@ -44,4 +44,21 @@ import {toast} from 'react-toastify'
    }
  }
  
- 
+ export const isLogin = () => async (dispatch) =>{
+
+   try {
+      dispatch(isLoginRequest())
+
+      const config ={
+         headers:{
+            Authorization: `Bearer ${localStorage.getItem('accesstoken')}`
+         }
+      }
+
+      const {data} = await axios.get('https://todo-slzv.onrender.com/isLogin',config)
+
+      dispatch(isLoginSuccess(data))
+   } catch (error) {
+      dispatch(isLoginFail(error.response.data.message))
+   }
+ }

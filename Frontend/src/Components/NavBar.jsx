@@ -1,12 +1,27 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {RxCross2} from 'react-icons/rx'
 import {FaBars} from 'react-icons/fa'
 import logo from '../assets/logo2.png'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { isLogin } from '../Actions/userAction'
+
 
 const NavBar = () => {
 
     const [toggle , setToggle] = useState(null)
+    const {IsLogin} = useSelector(state => state.user)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const logOut = () =>{
+        localStorage.removeItem('accesstoken');
+        navigate('/')
+        dispatch(isLogin())
+        setToggle(!toggle)
+        toast.success('LogOut Successfull')
+    }
   return (
     <>
     <nav>
@@ -42,11 +57,20 @@ const NavBar = () => {
               <div className={`${toggle? 'flex' :'hidden'}`}>
 
                <div className='md:hidden max-h-screen opacity-95 bg-gray-900 text-white z-10 fixed w-full top-14 py-4 text-2xl font-sans border border-t-2 border-b-0 border-x-0 text-center gap-12 flex flex-col pt-14'>
-               <h3>Home</h3>
-                    <h3>Todo's</h3>
-                    <h3>About</h3>
-                    <button className=' hover:text-gray-700' >Login</button>
-                    <button className=' hover:text-gray-700'>Signup</button>
+               <Link to='/'>Home</Link>
+                    <Link to='/todos' onClick={()=> setToggle(!toggle)}>Todo's</Link>
+                    <Link to='/about' onClick={()=> setToggle(!toggle)}>About</Link>
+
+                    {
+                        !IsLogin ? 
+                        <>
+                        <Link to='/login' className=' hover:text-gray-700' onClick={()=> setToggle(!toggle)} >Login</Link>
+                        <Link to='/signup' className=' hover:text-gray-700' onClick={()=> setToggle(!toggle)}>Signup</Link>
+                        </>
+                        :
+                        <button onClick={logOut}>Logout</button>
+                    }
+                    
                </div>
 
               </div> 

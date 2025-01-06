@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signupUser } from '../Actions/userAction';
 
 
@@ -9,7 +9,7 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
-  const [loading , isLogin] = useState('')
+  const {loading , isLogin} = useSelector(state => state.user)
   const navigate = useNavigate()
 
   const dispatch = useDispatch()

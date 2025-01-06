@@ -9,6 +9,12 @@ const signUpUser = async(req,res) =>{
       
     
 
+        const existingUser = await User.findOne({ email: req.body.email });
+
+        if (existingUser) {
+            return res.status(400).json({ message: "user already exists" });
+        }
+
         //hashed the password before saving 
 
         const hashedPassword = await bcrypt.hash(password,10)
