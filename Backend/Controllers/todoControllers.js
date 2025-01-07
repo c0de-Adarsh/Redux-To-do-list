@@ -64,8 +64,8 @@ const editTodo = async(req , res) =>{
             })
         }
 
-        todo.title = req.body.newTitle ;
-        todo.desc = req.body.newDesc ;
+        todo.title = req.body.title ;
+        todo.desc = req.body.desc ;
 
         await todo.save() ;      
 
