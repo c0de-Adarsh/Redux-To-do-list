@@ -1,5 +1,5 @@
 import axios from "axios"
-import { createTodoFail, createTodoRequest, createTodoSuccess, deleteTodoFail, deleteTodoRequest, deleteTodoSuccess, editTodoRequest, editTodoSuccess, getAllTodosFail, getAllTodosRequest, getAllTodosSuccess } from "../Slice/TodoSlice"
+import { createTodoFail, createTodoRequest, createTodoSuccess, deleteTodoFail, deleteTodoRequest, deleteTodoSuccess, editTodoFail, editTodoRequest, editTodoSuccess, getAllTodosFail, getAllTodosRequest, getAllTodosSuccess } from "../Slice/TodoSlice"
 import { toast } from "react-toastify"
 
 
@@ -57,27 +57,37 @@ export const createTodo = (todoData) => async (dispatch) => {
 }
 
 
- export const updateTodo = (id,todoData) => async (dispatch) =>{
-
+export const updateTodo = (id, todoData) => async (dispatch) => {
     try {
-        
-        dispatch(editTodoRequest())
-
-        const config = {
-            headers:{
-                Authorization:`Bearer ${localStorage.getItem("accesstoken")}`
-            }
+        if (!todoData.title || !todoData.description) {
+            toast.error("Title and description are required");
+            return;
         }
 
-        const {data} = await axios.put(`https://todo-slzv.onrender.com/edittodo/${id}`,todoData,config);
+        dispatch(editTodoRequest());
 
-        dispatch(editTodoSuccess())
-        dispatch(getTodos())
-        toast.success("Todo Updated Successfully")
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+            },
+        };
+
+        const { data } = await axios.put(
+            `https://todo-slzv.onrender.com/edittodo/${id}`,
+            todoData,
+            config
+        );
+
+        dispatch(editTodoSuccess());
+        dispatch(getTodos());
+        toast.success("Todo Updated Successfully");
     } catch (error) {
-        dispatch(editTodoRequest(error.response.data.message))
+        console.error("Error Response:", error.response?.data || error.message);
+        dispatch(editTodoFail(error.response?.data?.message || "Failed to update todo"));
+        toast.error(error.response?.data?.message || "Failed to update todo");
     }
- }
+};
+
 
  export const deleteTodo = (id) => async (dispatch) =>{
     try {

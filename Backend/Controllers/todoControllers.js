@@ -71,7 +71,7 @@ const editTodo = async(req , res) =>{
             })
         }
 
-        const editTodo = await Todo.findByIdAndUpdate(todo, {title,desc},{
+        const editTodo = await Todo.findByIdAndUpdate(req.params.id, {title,desc},{
            runValidators:true,
            new:true
         })
