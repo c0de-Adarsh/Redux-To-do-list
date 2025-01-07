@@ -57,39 +57,37 @@ export const createTodo = (todoData) => async (dispatch) => {
 }
 
 
+
+
 export const updateTodo = (id, todoData) => async (dispatch) => {
     try {
-        if (!todoData.title || !todoData.desc) {
-            toast.error("Title and description are required");
-            return;
-        }
-
-        dispatch(editTodoRequest());
+        dispatch(editTodoRequest())
 
         const config = {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
-            },
-        };
+                Authorization: `Bearer ${localStorage.getItem("accesstoken")}`
+            }
+        }
 
-        console.log("Sending data to backend:", todoData); // Log the data being sent
+        // Make the API request
+        const { data } = await axios.put(`https://todo-v4wt.onrender.com/edittodo/${id}`, todoData, config);
 
-        const { data } = await axios.put(
-            `https://todo-v4wt.onrender.com/edittodo/${id}`,
-            todoData,
-            config
-        );
+        console.log("Received data:", data);  // Log the full response
 
-        dispatch(editTodoSuccess());
-        dispatch(getTodos());
-        toast.success("Todo Updated Successfully");
-    } catch (error) {
-        console.error("Error Response:", error.response?.data || error.message);
-        dispatch(editTodoFail(error.response?.data?.message || "Failed to update todo"));
-        toast.error(error.response?.data?.message || "Failed to update todo");
+        // Check if the response contains the necessary data
+        if (data?.success && data?.todo) {
+            dispatch(editTodoSuccess(data.todo));  // Pass the todo data
+            dispatch(getTodos())
+            toast.success("Todo Updated Successfully!")
+        } else {
+            throw new Error("Todo data or ID is missing in response");
+        }
+
+    } catch (err) {
+        console.error("Error:", err);  // Log the error message
+        dispatch(editTodoFail(err.message || "An error occurred. Please try again."));
     }
-};
-
+}
 
 
  export const deleteTodo = (id) => async (dispatch) =>{
