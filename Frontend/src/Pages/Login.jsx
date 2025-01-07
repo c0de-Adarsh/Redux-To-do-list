@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, } from 'react-router-dom'
 import { loginUser } from '../Actions/userAction'
+import {CgSpinnerTwo} from 'react-icons/cg'
 
 
 const Login = () => {
@@ -45,7 +46,7 @@ const Login = () => {
             <input required onChange={(e) => setPassword(e.target.value)} className='text-black rounded-md outline-none py-1 px-2 placeholder-bold' placeholder='Password' type="password" />
 
             <div className='pt-2 flex justify-center w-full items-center flex-col'>
-                            <button className='bg-blue-500 w-full rounded-md font-semibold text-lg py-1 text-white'>Login</button>
+                            <button disabled={loading} className={`bg-blue-500 hover:bg-blue-600 ${loading? "bg-blue-600" :"bg-blue-500" } rounded-md w-full font-semibold text-lg py-1 text-white`}>{loading? <div className='flex justify-center py-1 animate-spin items-center' ><CgSpinnerTwo size={20} /></div> : "Login"}</button>
             </div>
 
             <p className="text-center md:text-md text-sm text-white font-bold">
