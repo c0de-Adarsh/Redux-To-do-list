@@ -11,7 +11,7 @@ export const getTodos = () => async(dispatch) => {
           Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
         },
       };
-      const { data } = await axios.get('https://todo-c9i7.onrender.com/gettodo', config);
+      const { data } = await axios.get('https://todo-v4wt.onrender.com/gettodo', config);
       
       dispatch(getAllTodosSuccess(data.todo)); // Correct property name "todo" from response
     } catch (error) {
@@ -48,7 +48,7 @@ export const createTodo = (todoData) => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("accesstoken")}`
             }
         }
-        const {data} = await axios.post('https://todo-c9i7.onrender.com/createtodo', todoData, config)
+        const {data} = await axios.post('https://todo-v4wt.onrender.com/createtodo', todoData, config)
         dispatch(createTodoSuccess(data.todo)) // Pass the todo data
         toast.success("Todo added successful")
     } catch (error) {
@@ -59,7 +59,7 @@ export const createTodo = (todoData) => async (dispatch) => {
 
 export const updateTodo = (id, todoData) => async (dispatch) => {
     try {
-        if (!todoData.title || !todoData.description) {
+        if (!todoData.title || !todoData.desc) {
             toast.error("Title and description are required");
             return;
         }
@@ -72,8 +72,10 @@ export const updateTodo = (id, todoData) => async (dispatch) => {
             },
         };
 
+        console.log("Sending data to backend:", todoData); // Log the data being sent
+
         const { data } = await axios.put(
-            `https://todo-c9i7.onrender.com/edittodo/${id}`,
+            `https://todo-v4wt.onrender.com/edittodo/${id}`,
             todoData,
             config
         );
@@ -89,6 +91,7 @@ export const updateTodo = (id, todoData) => async (dispatch) => {
 };
 
 
+
  export const deleteTodo = (id) => async (dispatch) =>{
     try {
         dispatch(deleteTodoRequest())
@@ -98,7 +101,7 @@ export const updateTodo = (id, todoData) => async (dispatch) => {
             }
         }
 
-        const {data} = await axios.delete(`https://todo-c9i7.onrender.com/deletetodo/${id}`,config)
+        const {data} = await axios.delete(`https://todo-v4wt.onrender.com/deletetodo/${id}`,config)
         dispatch(deleteTodoSuccess())
         dispatch(getTodos())
         toast.success("Todos Deleted Successfully")

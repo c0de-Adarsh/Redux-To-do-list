@@ -21,18 +21,30 @@ export const Todo = ({ num, title, desc, id }) => {
         e.preventDefault()
         dispatch(deleteTodo(id))
     }
-
     const update = (e) => {
-        e.preventDefault()
-       
-        const data = {
-            newTitle,
-            newDesc
+        e.preventDefault();
+
+        if (!newTitle || !newDesc) {
+            toast.error("Title and description are required");
+            return;
         }
-        dispatch(updateTodo(id, data))
-        setTitle("")
-        setDesc("")
-    }
+
+        const data = {
+            title: newTitle,  // Correct field names for backend
+            desc: newDesc
+        };
+
+        // Log to check what data is being passed
+        console.log("Updating Todo with data:", data);
+
+        // Dispatch the updateTodo action with the correct data
+        dispatch(updateTodo(id, data));
+
+        // Clear the input fields after dispatch
+        setTitle("");
+        setDesc("");
+    };
+
 
     return (
         <>
@@ -45,8 +57,25 @@ export const Todo = ({ num, title, desc, id }) => {
                 </div>
 
                 <form onSubmit={update} className={` grid-cols-3 ${toggle ? 'grid' : 'hidden'}  gap-2 px-3 pt-2`} >
-                    <input required placeholder='New Title' value={newTitle} onChange={(e) => { setTitle(e.target.value) }} type="text" name='title' className=' rounded-md placeholder-bold px-1 py-1 text-black outline-none' />
-                    <input required placeholder='New Description' value={newDesc} onChange={(e) => { setDesc(e.target.value) }} className=' rounded-md px-1 py-1 text-black placeholder-bold outline-none' type="text" name='desc' />
+                    <input
+                        required
+                        placeholder='New Title'
+                        value={newTitle}
+                        onChange={(e) => setTitle(e.target.value)}
+                        type="text"
+                        name='title'
+                        className='rounded-md placeholder-bold px-1 py-1 text-black outline-none'
+                    />
+                    <input
+                        required
+                        placeholder='New Description'
+                        value={newDesc}
+                        onChange={(e) => setDesc(e.target.value)}
+                        className='rounded-md px-1 py-1 text-black placeholder-bold outline-none'
+                        type="text"
+                        name='desc'
+                    />
+
                     <button className='flex items-center justify-left' >  <VscSaveAs className='cursor-pointer hover:text-blue-500' size={25} /> </button>
                 </form>
 

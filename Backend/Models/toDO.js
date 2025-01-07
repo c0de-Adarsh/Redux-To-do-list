@@ -7,7 +7,7 @@ const todoSchema = new mongoose.Schema({
     },
     desc:{
         type:String,
-        required:[true,'Plese Enter Description']
+        required:[true,'Please Enter Description']
     },
     user:{
         type:mongoose.Schema.ObjectId,
