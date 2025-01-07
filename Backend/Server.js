@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 
 
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:'https://adarsh-redux-todo.netlify.app',
     
     credentials:true
 }))
