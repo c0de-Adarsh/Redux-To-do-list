@@ -9,7 +9,7 @@ import {toast} from 'react-toastify'
     try {
         dispatch(loginRequest())
 
-        const {data} = await axios.post('https://todo-slzv.onrender.com/login',userData,)
+        const {data} = await axios.post('https://todo-c9i7.onrender.com/login',userData,)
 
         dispatch(loginSuccess());
         localStorage.setItem('accesstoken',data.token)
@@ -26,7 +26,7 @@ import {toast} from 'react-toastify'
    try {
       dispatch(resgisterRequest())
 
-      const {data} = await axios.post('https://todo-slzv.onrender.com/signup',userData)
+      const {data} = await axios.post('https://todo-c9i7.onrender.com/signup',userData)
 
       dispatch(resgisterSuccess())
 
@@ -55,7 +55,7 @@ import {toast} from 'react-toastify'
          }
       }
 
-      const {data} = await axios.get('https://todo-slzv.onrender.com/isLogin',config)
+      const {data} = await axios.get('https://todo-c9i7.onrender.com/isLogin',config)
 
       dispatch(isLoginSuccess(data))
    } catch (error) {

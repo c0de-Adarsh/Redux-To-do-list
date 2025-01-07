@@ -37,6 +37,7 @@ const todoSlice = createSlice({
         },
         editTodoSuccess: (state, action) => {
             state.loading = false
+            // Update the todo in the state
             state.allTodos = state.allTodos.map(todo => 
                 todo._id === action.payload._id ? action.payload : todo
             )

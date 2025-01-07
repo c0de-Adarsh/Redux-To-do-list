@@ -11,7 +11,7 @@ export const getTodos = () => async(dispatch) => {
           Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
         },
       };
-      const { data } = await axios.get('https://todo-slzv.onrender.com/gettodo', config);
+      const { data } = await axios.get('https://todo-c9i7.onrender.com/gettodo', config);
       
       dispatch(getAllTodosSuccess(data.todo)); // Correct property name "todo" from response
     } catch (error) {
@@ -48,7 +48,7 @@ export const createTodo = (todoData) => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("accesstoken")}`
             }
         }
-        const {data} = await axios.post('https://todo-slzv.onrender.com/createtodo', todoData, config)
+        const {data} = await axios.post('https://todo-c9i7.onrender.com/createtodo', todoData, config)
         dispatch(createTodoSuccess(data.todo)) // Pass the todo data
         toast.success("Todo added successful")
     } catch (error) {
@@ -73,7 +73,7 @@ export const updateTodo = (id, todoData) => async (dispatch) => {
         };
 
         const { data } = await axios.put(
-            `https://todo-slzv.onrender.com/edittodo/${id}`,
+            `https://todo-c9i7.onrender.com/edittodo/${id}`,
             todoData,
             config
         );
@@ -98,7 +98,7 @@ export const updateTodo = (id, todoData) => async (dispatch) => {
             }
         }
 
-        const {data} = await axios.delete(`https://todo-slzv.onrender.com/deletetodo/${id}`,config)
+        const {data} = await axios.delete(`https://todo-c9i7.onrender.com/deletetodo/${id}`,config)
         dispatch(deleteTodoSuccess())
         dispatch(getTodos())
         toast.success("Todos Deleted Successfully")

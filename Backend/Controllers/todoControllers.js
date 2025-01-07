@@ -53,43 +53,37 @@ const getTodo = async(req , res)=>{
 
 const editTodo = async(req , res) =>{
 
-    try {
-        
-        const todo = await Todo.findById(req.params.id)
-        const {title , desc} = req.body;
+    try{
 
-        if(!title || !desc){
-            return res.status(401).json({
-               message:'Title and description are required'
-            })
-        }
+        const todo = await Todo.findById(req.params.id) ;
 
         if(!todo){
-            return res.status(401).json({
-                success:false,
-                message:"Todo Not Found"
+            return res.status(400).json({
+                success: false,
+                message: "Todo not found"
             })
         }
 
-        const editTodo = await Todo.findByIdAndUpdate(req.params.id, {title,desc},{
-           runValidators:true,
-           new:true
-        })
-       
+        todo.title = req.body.newTitle ;
+        todo.desc = req.body.newDesc ;
 
-        await editTodo.save()
+        await todo.save() ;      
+
         res.status(200).json({
-            success:true,
-            message:'Todo update successfully'
+            success: true,
+            message: "Todo Edited",
+            todo
         })
 
-    } catch (error) {
+    }catch(err){
         res.status(500).json({
-            success:false,
-            message:error.message
+            success: false,
+            message: err.message
         })
     }
 }
+
+
 
 const deleteTodo = async(req, res)=>{
    
